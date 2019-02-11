@@ -1,0 +1,36 @@
+version: '2'
+
+
+services:
+  web:
+    build: .
+    volumes:
+      - .:/usr/src/app
+    image: sandbox/clojure-app-bench
+    ports:
+      - 8000:80
+    # command: "lein run"
+    environment:
+      # VIRTUAL_HOST: "hello-clojure.docker"
+      CLOJURE_ENV: 'development'
+    depends_on:
+      - redis
+
+  redis:
+    image: redis
+
+  # web-graalvm:
+  #   build:
+  #     context: .
+  #     dockerfile: ./deploy/Dockerfile
+  #   image: sandbox/clojure-graalvm-app-bench
+  #   volumes:
+  #     - .:/usr/src/app
+  #   ports:
+  #     - 8000:80
+  #   # command: "lein run"
+  #   # environment:
+  #     # VIRTUAL_HOST: "hello-clojure.docker"
+  #     # CLOJURE_ENV: 'development'
+  #   depends_on:
+  #     - redis
